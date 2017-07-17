@@ -3,14 +3,7 @@
 $properties = array();
 
 $tmp = array(
-    'tpl' => array(
-        'type' => 'textfield',
-        'value' => 'tpl.xLike',
-    ),
-    'guest' => array(
-        'type' => 'combo-boolean',
-        'value' => true,
-    ),
+
     'parent' => array(
         'type' => 'numberfield',
         'value' => '',
@@ -22,6 +15,24 @@ $tmp = array(
     'list' => array(
         'type' => 'textfield',
         'value' => 'default',
+    ),
+
+    'guest' => array(
+        'type' => 'combo-boolean',
+        'value' => true,
+    ),
+    'tpl' => array(
+        'type' => 'textfield',
+        'value' => 'tpl.xLike',
+    ),
+
+    'mode' => array(
+        'type' => 'list',
+        'options' => array(
+            array('text' => 'db', 'value' => 'db'),
+            array('text' => 'local', 'value' => 'local'),
+        ),
+        'value' => 'db',
     ),
 );
 

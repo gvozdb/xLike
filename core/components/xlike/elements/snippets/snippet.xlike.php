@@ -10,6 +10,7 @@ $xl->initialize($modx->context->key);
 
 //
 $tpl = $sp['tpl'] ?: 'tpl.xLike';
+$sp['mode'] = $sp['mode'] ?: 'db';
 $sp['guest'] = isset($sp['guest']) ? $sp['guest'] : true;
 $sp['parent'] = (int)($sp['parent'] ?: $modx->resource->id);
 $sp['class'] = $sp['class'] ?: 'modResource';
@@ -29,7 +30,13 @@ $pls = array(
 );
 
 // Выборка всех лайков/дизлайков и рейтинга
-$pls = array_merge($pls, $xl->getVotesData($sp['parent'], $sp['class'], $sp['list']));
+if ($sp['mode'] == 'db') {
+    $pls = array_merge($pls, $xl->getVotesData($sp['parent'], $sp['class'], $sp['list']));
+} elseif ($sp['mode'] == 'local') {
+    foreach (array('likes', 'dislikes', 'rating') as $v) {
+        $pls[$v] = $sp[$v] ?: 0;
+    }
+}
 
 //
 $user = (int)($modx->user->id ?: 0);
@@ -57,7 +64,7 @@ if ($q->prepare() && $q->stmt->execute()) {
 }
 
 // Записываем параметры сниппета в сессию
-unset($sp['parent'], $sp['tpl']);
+unset($sp['parent'], $sp['tpl'], $sp['mode'], $sp['likes'], $sp['dislikes'], $sp['rating']);
 $pls['propkey'] = sha1(serialize($sp));
 $_SESSION['xLike']['properties'][$pls['propkey']] = $sp;
 
