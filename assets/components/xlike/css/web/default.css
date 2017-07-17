@@ -1,0 +1,134 @@
+.xlike {
+    position: relative;
+}
+
+.xlike:after,
+.xlike:before {
+    content: " ";
+    display: block;
+    clear: both;
+}
+
+.xlike .xlike__line {
+    width: 100%;
+    height: 2px;
+    background-color: #ccc;
+    opacity: .7;
+}
+
+.xlike .xlike__line-fill {
+    -webkit-transition: all .7s ease-in-out;
+    -o-transition: all .7s ease-in-out;
+    -moz-transition: all .7s ease-in-out;
+    transition: all .7s ease-in-out;
+    width: 0;
+    height: 100%;
+    background-color: #ef4646;
+}
+
+.xlike .xlike__percent {
+    float: right;
+    display: block;
+    color: #707070;
+    font-size: .8em;
+    line-height: 1.4em;
+}
+
+.xlike .xlike__items {
+    float: left;
+    display: block;
+    margin-left: .2rem;
+    margin-top: .3rem;
+}
+
+.xlike .xlike__item {
+    display: inline-block;
+    margin: 0 .1rem 0 0;
+    vertical-align: middle;
+}
+
+.xlike .xlike__link {
+    transition: all .4s ease-in-out;
+    color: #444;
+    border: 0;
+    opacity: .7;
+    text-decoration: none;
+}
+
+.xlike a.xlike__link:hover {
+    color: #444;
+    opacity: 1
+}
+
+.xlike a.xlike__link:hover .xlike__svg {
+    box-shadow: 0 0 15px -2px rgba(0, 0, 0, .05);
+}
+
+.xlike .xlike__link_active {
+    opacity: .9;
+}
+
+.xlike .xlike__link_active .xlike__svg {
+    background-color: #ef4646;
+}
+
+.xlike .xlike__link_active .xlike__svg-hand,
+.xlike .xlike__link_active .xlike__svg-jacket {
+    fill: #fff;
+}
+
+.xlike .xlike__link_active .xlike__svg-shirt {
+    fill: #ef4646;
+}
+
+.xlike__item_dislike .xlike__link_active .xlike__svg {
+    background-color: #707070;
+}
+
+.xlike__item_dislike .xlike__link_active .xlike__svg-hand,
+.xlike__item_dislike .xlike__link_active .xlike__svg-jacket {
+    fill: #fff;
+}
+
+.xlike__item_dislike .xlike__link_active .xlike__svg-shirt {
+    fill: #707070;
+}
+
+.xlike .xlike__icon {
+    transition: all .4s ease-in-out;
+    background-color: #ddd;
+    border-radius: 100px;
+    vertical-align: middle;
+}
+
+.xlike .xlike__svg {
+    width: 2em;
+    height: 2em;
+}
+
+.xlike .xlike__svg path {
+    transition: all .4s ease-in-out;
+}
+
+.xlike .xlike__svg-hand,
+.xlike .xlike__svg-jacket {
+    fill: #444;
+}
+
+.xlike .xlike__svg-shirt {
+    fill: #fff;
+}
+
+.xlike .xlike__svg_dislike {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.xlike .xlike__count {
+    font-size: .8em;
+    line-height: 1em;
+    vertical-align: middle;
+}
