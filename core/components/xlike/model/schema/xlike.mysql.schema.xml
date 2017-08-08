@@ -24,6 +24,27 @@
         <index alias="list" name="list" primary="false" unique="false" type="BTREE">
             <column key="list" length="" collation="A" null="false"/>
         </index>
+
+        <aggregate alias="Resource" class="modResource" local="parent" foreign="id" cardinality="one" owner="foreign">
+            <criteria target="local"><![CDATA[
+            {"class":"modResource"}
+            ]]></criteria>
+        </aggregate>
+        <aggregate alias="msProduct" class="msProduct" local="parent" foreign="id" cardinality="one" owner="foreign">
+            <criteria target="local"><![CDATA[
+            {"class":"msProduct"}
+            ]]></criteria>
+        </aggregate>
+        <aggregate alias="Ticket" class="Ticket" local="parent" foreign="id" cardinality="one" owner="foreign">
+            <criteria target="local"><![CDATA[
+            {"class":"Ticket"}
+            ]]></criteria>
+        </aggregate>
+        <aggregate alias="TicketComment" class="TicketComment" local="parent" foreign="id" cardinality="one" owner="foreign">
+            <criteria target="local"><![CDATA[
+            {"class":"TicketComment"}
+            ]]></criteria>
+        </aggregate>
     </object>
 
 </model>

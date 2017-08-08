@@ -4,13 +4,13 @@
 
 $plugins = array();
 $tmp = array(
-    // 'xlSystem' => array(
-    //     'file' => 'system',
-    //     'description' => '',
-    //     'events' => array(
-    //         'OnMODXInit' => array(),
-    //     ),
-    // ),
+    'xlSystem' => array(
+        'file' => 'system',
+        'description' => '',
+        'events' => array(
+            'OnMODXInit' => array(),
+        ),
+    ),
 );
 
 foreach ($tmp as $k => $v) {
