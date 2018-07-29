@@ -48,7 +48,11 @@ class xlVoteProcessor extends modProcessor
         if ($this->modx->user->id) {
             $condition['createdby'] = $this->modx->user->id;
         } else {
-            $condition[] = 'createdby = 0 AND (ip = "' . $ip . '" OR session = "' . $session . '")';
+            if ($this->getProperty('ip', true)) {
+                $condition[] = 'createdby = 0 AND (ip = "' . $ip . '" OR session = "' . $session . '")';
+            } else {
+                $condition[] = 'createdby = 0 AND session = "' . $session . '"';
+            }
         }
 
         //
@@ -71,6 +75,7 @@ class xlVoteProcessor extends modProcessor
                 'parent' => $parent,
                 'class' => $class,
                 'list' => $list,
+                'ip' => $this->getProperty('ip', true),
                 'value' => $value,
             );
         }

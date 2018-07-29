@@ -63,6 +63,7 @@ switch ($_REQUEST['action']) {
         $response = $xl->tools->runProcessor('mgr/vote/doit', array(
             'class' => $sp['class'],
             'list' => $sp['list'],
+            'ip' => $sp['ip'],
             'parent' => $parent,
             'value' => $value,
         ));

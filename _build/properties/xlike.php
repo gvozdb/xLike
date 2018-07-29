@@ -21,6 +21,10 @@ $tmp = array(
         'type' => 'combo-boolean',
         'value' => true,
     ),
+    'ip' => array(
+        'type' => 'combo-boolean',
+        'value' => true,
+    ),
     'tpl' => array(
         'type' => 'textfield',
         'value' => 'tpl.xLike',

@@ -11,6 +11,7 @@ $xl->initialize($modx->context->key);
 //
 $tpl = $sp['tpl'] ?: 'tpl.xLike';
 $sp['mode'] = $sp['mode'] ?: 'db';
+$sp['ip'] = isset($sp['ip']) ? $sp['ip'] : true;
 $sp['guest'] = isset($sp['guest']) ? $sp['guest'] : true;
 $sp['parent'] = (int)($sp['parent'] ?: $modx->resource->id);
 $sp['class'] = $sp['class'] ?: 'modResource';
@@ -54,9 +55,15 @@ $q->where(array(
     'createdby' => $user,
 ));
 if (!empty($sp['guest']) && empty($user)) {
-    $q->where(array(
-        '(ip = "' . $ip . '" OR session = "' . $session . '")',
-    ));
+    if ($sp['ip']) {
+        $q->where(array(
+            '(ip = "' . $ip . '" OR session = "' . $session . '")',
+        ));
+    } else {
+        $q->where(array(
+            'session = "' . $session . '"',
+        ));
+    }
 }
 $q->limit(1);
 if ($q->prepare() && $q->stmt->execute()) {
