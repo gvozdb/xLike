@@ -7,6 +7,7 @@ if (!$xl = $modx->getService('xlike', 'xLike', (MODX_CORE_PATH . 'components/xli
     return 'Could not load xLike class!';
 }
 $xl->initialize($modx->context->key);
+$xl->loadFrontendScripts();
 
 //
 $tpl = $sp['tpl'] ?: 'tpl.xLike';

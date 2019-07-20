@@ -70,9 +70,9 @@ class xLike
                 case 'mgr':
                     break;
                 default:
-                    if (!defined('MODX_API_MODE') || !MODX_API_MODE) {
-                        $this->loadFrontendScripts();
-                    }
+                    // if (!defined('MODX_API_MODE') || !MODX_API_MODE) {
+                    //     $this->loadFrontendScripts();
+                    // }
                     break;
             }
         }
@@ -107,8 +107,8 @@ class xLike
                 'actionUrl' => $this->config['actionUrl'],
             ), $sp));
 
-            $this->modx->regClientScript('<script type="text/javascript">
-                if (typeof(' . $objectName . 'Cls) == "undefined") {
+            $this->modx->regClientScript('<script>
+                if (typeof(' . $objectName . 'Cls) === "undefined") {
                     var ' . $objectName . 'Cls = new ' . $objectName . '(' . $params . ');
                 }
             </script>', true);

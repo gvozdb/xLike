@@ -91,7 +91,7 @@ class xlVoteProcessor extends modProcessor
         $data = $this->xl->getVotesData($parent, $class, $list);
 
         //
-        $response = $this->xl->tools->invokeEvent('xLikeOnVote', array(
+        $this->xl->tools->invokeEvent('xLikeOnVote', array(
             // 'action' => $action,
             // 'vote' => is_object($vote) ? $vote : null,
             // 'value' => $value,
