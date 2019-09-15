@@ -80,6 +80,18 @@ class xlVoteProcessor extends modProcessor
             );
         }
 
+        //
+        if ($action === 'create') {
+            $response = $this->xl->tools->invokeEvent('xLikeOnCanVote', array(
+                'parent' => $parent,
+                'class' => $class,
+                'list' => $list,
+            ));
+            if (!$response['success']) {
+                return $this->failure($response['message']);
+            }
+        }
+
         // Запускаем действие, соответствующее намерению пользователя
         $this->modx->error->reset();
         $response = $this->xl->tools->runProcessor(('mgr/vote/' . $action), $params);
@@ -92,9 +104,6 @@ class xlVoteProcessor extends modProcessor
 
         //
         $this->xl->tools->invokeEvent('xLikeOnVote', array(
-            // 'action' => $action,
-            // 'vote' => is_object($vote) ? $vote : null,
-            // 'value' => $value,
             'parent' => $parent,
             'class' => $class,
             'list' => $list,

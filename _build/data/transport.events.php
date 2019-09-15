@@ -3,6 +3,7 @@
 $events = array();
 $tmp = array(
     'xLikeOnVote',
+    'xLikeOnCanVote',
 );
 
 foreach ($tmp as $k => $v) {

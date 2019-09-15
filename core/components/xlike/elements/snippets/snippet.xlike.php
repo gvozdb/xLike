@@ -42,19 +42,28 @@ if ($sp['mode'] == 'db') {
 
 //
 $user = (int)($modx->user->id ?: 0);
-$pls['can'] = (($sp['guest'] && empty($user)) || !empty($user));
+if ($can = (($sp['guest'] && empty($user)) || !empty($user))) {
+    $response = $xl->tools->invokeEvent('xLikeOnCanVote', array(
+        'parent' => $sp['parent'],
+        'class' => $sp['class'],
+        'list' => $sp['list'],
+    ));
+    $can = $response['success'];
+}
+$pls['can'] = $can;
 
 // Выборка установленного голоса
-$q = $modx->newQuery('xlVote');
-$q->select(array(
-    'value',
-));
-$q->where(array(
-    'parent' => $sp['parent'],
-    'class' => $sp['class'],
-    'list' => $sp['list'],
-    'createdby' => $user,
-));
+$q = $modx->newQuery('xlVote')
+    ->select(array(
+        'value',
+    ))
+    ->where(array(
+        'parent' => $sp['parent'],
+        'class' => $sp['class'],
+        'list' => $sp['list'],
+        'createdby' => $user,
+    ))
+    ->limit(1);
 if (!empty($sp['guest']) && empty($user)) {
     if ($sp['ip']) {
         $q->where(array(
@@ -66,8 +75,7 @@ if (!empty($sp['guest']) && empty($user)) {
         ));
     }
 }
-$q->limit(1);
-if ($q->prepare() && $q->stmt->execute()) {
+if ($q->prepare()->execute()) {
     $pls['value'] = $q->stmt->fetchColumn();
 }
 
@@ -75,8 +83,6 @@ if ($q->prepare() && $q->stmt->execute()) {
 unset($sp['parent'], $sp['tpl'], $sp['mode'], $sp['likes'], $sp['dislikes'], $sp['rating']);
 $pls['propkey'] = sha1(serialize($sp));
 $_SESSION['xLike']['properties'][$pls['propkey']] = $sp;
-
-// return $pls;
 
 //
 return $xl->tools->getChunk($tpl, $pls);
