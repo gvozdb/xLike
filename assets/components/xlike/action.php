@@ -26,14 +26,21 @@ if (!$xl = $modx->getService('xlike', 'xLike', MODX_CORE_PATH . 'components/xlik
 $xl->initialize($ctx, array('jsonResponse' => true));
 
 //
-if (empty($_REQUEST['action']) || empty($_REQUEST['propkey'])) {
+if (empty($_REQUEST['action']) || (empty($_REQUEST['propkey']) && empty($_REQUEST['props']))) {
     exit($xl->tools->failure('Access denied'));
 } else {
-    $propkey = $_REQUEST['propkey'];
+    $propkey = @$_REQUEST['propkey'] ?: null;
+    $crypted_props = @$_REQUEST['props'] ?: null;
 }
 
 // Load script properties
-$sp = @$_SESSION['xLike']['properties'][$propkey];
+if (!empty($crypted_props)) {
+    $crypter = $xl->getCrypter();
+    $sp = $modx->fromJSON($crypter->decrypt($crypted_props));
+}
+elseif (!empty($propkey)) {
+    $sp = @$_SESSION['xLike']['properties'][$propkey];
+}
 if (empty($sp) || !is_array($sp) || empty($sp['class']) || empty($sp['list'])) {
     exit($xl->tools->failure('Access denied'));
 }

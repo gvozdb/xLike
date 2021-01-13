@@ -1,9 +1,6 @@
 <?php
-
 $properties = array();
-
 $tmp = array(
-
     'parent' => array(
         'type' => 'numberfield',
         'value' => '',

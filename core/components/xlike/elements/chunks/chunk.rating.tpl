@@ -6,7 +6,11 @@
 <path class="xlike__svg-jacket" d="M37.68 70.001h-11.067c-1.274 0-2.312-1.04-2.312-2.317l-3.304-21.38c0-1.279 1.037-2.318 2.311-2.318h14.372c1.275 0 2.312 1.039 2.312 2.318v21.38c-.001 1.277-1.038 2.317-2.312 2.317z"/>
 {/var}
 
-<div class="xlike [ js-xlike-object ]" data-xlike-propkey="{$propkey}" data-xlike-parent="{$parent}">
+<div class="xlike [ js-xlike-object ]"
+     data-xlike-propkey="{$propkey}"
+     data-xlike-props="{$props}"
+     data-xlike-parent="{$parent}"
+>
     <div class="xlike__line">
         <div class="xlike__line-fill [ js-xlike-stripe ]" style="min-width: {$rating}%;"></div>
     </div>

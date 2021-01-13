@@ -75,6 +75,7 @@
                     var $object = $button.closest(self.selectors['object']);
                     if ($object['length']) {
                         var propkey = $object.data('xlike-propkey');
+                        var props = $object.data('xlike-props');
                         var parent = $object.data('xlike-parent');
                         var value = $button.data('xlike-value');
                         var sendData = $.extend({}, self['sendDataTemplate']);
@@ -84,6 +85,7 @@
                         sendData['params'] = {
                             action: 'vote',
                             propkey: propkey,
+                            props: props,
                             parent: parent,
                             value: value,
                         };

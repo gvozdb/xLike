@@ -2,14 +2,31 @@
 
 class xLike
 {
+    /**
+     * @var array $config
+     */
     public $config = array();
+    /**
+     * @var array $initialized
+     */
     public $initialized = array();
-    /** @var modX $modx */
+    /**
+     * @var modX $modx
+     */
     public $modx;
-    /** @var xlTools $tools */
+    /**
+     * @var xlTools $tools
+     */
     public $tools;
-    /** @var pdoTools $pdoTools */
+    /**
+     * @var xlCrypter $crypter
+     */
+    public $crypter;
+    /**
+     * @var pdoTools $pdoTools
+     */
     public $pdoTools;
+
 
     /**
      * @param modX  $modx
@@ -50,6 +67,7 @@ class xLike
         $this->modx->lexicon->load('xlike:default');
     }
 
+
     /**
      * @param string $ctx
      * @param array  $sp
@@ -79,6 +97,7 @@ class xLike
 
         return ($this->initialized[$ctx] = true);
     }
+
 
     /**
      * @param string $objectName
@@ -119,6 +138,7 @@ class xLike
         return !empty($this->modx->loadedjscripts[$objectName]);
     }
 
+
     /**
      * @return xlTools
      */
@@ -133,6 +153,34 @@ class xLike
         return $this->tools;
     }
 
+
+    /**
+     * @param string $method
+     *
+     * @return xlCrypter
+     */
+    public function getCrypter($method = 'AES-256-CBC')
+    {
+        if (!is_object($this->crypter)) {
+            if ($class = $this->modx->loadClass('crypter.xlCrypter', $this->config['handlersPath'], true, true)) {
+                //
+                $salt = md5(join('', [
+                    $this->modx->getOption('site_name'),
+                    $this->modx->getOption('error_page'),
+                    $this->modx->getOption('default_template'),
+                    $this->modx->getOption('mail_smtp_hosts'),
+                    $this->modx->getOption('emailsender'),
+                ]));
+
+                //
+                $this->crypter = new $class($salt, $method);
+            }
+        }
+
+        return $this->crypter;
+    }
+
+
     /**
      * @return pdoTools
      */
@@ -144,6 +192,7 @@ class xLike
 
         return $this->pdoTools;
     }
+
 
     /**
      * @param $parent

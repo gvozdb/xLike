@@ -22,6 +22,9 @@ if (empty($sp['parent']) || empty($sp['class']) || empty($sp['list'])) {
 }
 $ip = $xl->tools->getIp();
 $session = session_id();
+if (empty($session)) {
+    $sp['ip'] = true;
+}
 
 $pls = array(
     'parent' => $sp['parent'],
@@ -66,9 +69,15 @@ $q = $modx->newQuery('xlVote')
     ->limit(1);
 if (!empty($sp['guest']) && empty($user)) {
     if ($sp['ip']) {
-        $q->where(array(
-            '(ip = "' . $ip . '" OR session = "' . $session . '")',
-        ));
+        if (empty($session)) {
+            $q->where(array(
+                '(ip = "' . $ip . '")',
+            ));
+        } else {
+            $q->where(array(
+                '(ip = "' . $ip . '" OR session = "' . $session . '")',
+            ));
+        }
     } else {
         $q->where(array(
             'session = "' . $session . '"',
@@ -79,10 +88,19 @@ if ($q->prepare()->execute()) {
     $pls['value'] = $q->stmt->fetchColumn();
 }
 
-// Записываем параметры сниппета в сессию
+// Пробрасываем параметры сниппета в action.php
 unset($sp['parent'], $sp['tpl'], $sp['mode'], $sp['likes'], $sp['dislikes'], $sp['rating']);
-$pls['propkey'] = sha1(serialize($sp));
-$_SESSION['xLike']['properties'][$pls['propkey']] = $sp;
+if (!empty($session)) {
+    // Через сессию, если они доступны
+    $pls['propkey'] = sha1(serialize($sp));
+    $_SESSION['xLike']['properties'][$pls['propkey']] = $sp;
+} else {
+    // Через закриптованную строку в запросе JS
+    $crypter = $xl->getCrypter();
+    $crypted_props = $crypter->encrypt($modx->toJSON($sp));
+
+    $pls['props'] = $crypted_props;
+}
 
 //
 return $xl->tools->getChunk($tpl, $pls);

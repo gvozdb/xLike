@@ -62,7 +62,7 @@ class xlVoteUpdateProcessor extends modObjectUpdateProcessor
         $required = array(
             'parent',
             'ip',
-            'session',
+            // 'session',
             'value',
         );
         $this->xl->tools->checkProcessorRequired($this, $required, 'xl_err_required');

@@ -62,7 +62,7 @@ class xlVoteCreateProcessor extends modObjectCreateProcessor
         $required = array(
             'parent',
             'ip',
-            'session',
+            // 'session',
             'value',
         );
         $this->xl->tools->checkProcessorRequired($this, $required, 'xl_err_required');
@@ -78,14 +78,14 @@ class xlVoteCreateProcessor extends modObjectCreateProcessor
             $this->xl->tools->checkProcessorUnique('', 0, $this, $unique, 'xl_err_unique', $condition);
         } else {
             foreach (array('ip', 'session') as $v) {
-                if ($v == 'ip' && !$check_ip) {
+                if ((empty($check_ip) && $v === 'ip') || (empty($session) && $v === 'session')) {
                     continue;
                 }
                 $condition = array(
                     'class' => $this->getProperty('class'),
                     'list' => $this->getProperty('list'),
                     'createdby' => 0,
-                    $v => $this->getProperty($v),
+                    $v => $$v,
                 );
                 $this->xl->tools->checkProcessorUnique('', 0, $this, $unique, 'xl_err_unique', $condition);
             }
