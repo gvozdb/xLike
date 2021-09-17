@@ -117,7 +117,7 @@
         self.Submit = {
             // status: false,
             before: function () {
-                if (self.sendData.params['action'] == 'vote') {
+                if (self.sendData.params['action'] === 'vote') {
                     // Реализуем оптимистичный интерфейс
                     var $last = self.sendData['$last'];
                     var $button = self.sendData['$element'];
@@ -146,10 +146,13 @@
                     } else {
                         $number.text(self.Tools.number_format((number - 1), 0, '.', ' '));
                     }
+
+                    //
+                    $(document).trigger('xlike_click', $button);
                 }
             },
             after: function (response) {
-                if (self.sendData.params['action'] == 'vote') {
+                if (self.sendData.params['action'] === 'vote') {
                     var $last = self.sendData['$last'];
                     var $button = self.sendData['$element'];
                     var $object = $button.closest(self.selectors['object']);
@@ -196,8 +199,8 @@
                         if (typeof(response.data['rating']) != 'undefined') {
                             var rating_old = $rating.text().replace(' ', ''); // parseFloat($rating.text().replace(' ', ''));
                             var rating_new = response.data['rating']; // parseFloat(response.data['rating']);
-                            console.log('[xLike] self.Submit.post() after rating_old', rating_old);
-                            console.log('[xLike] self.Submit.post() after rating_new', rating_new);
+                            // console.log('[xLike] self.Submit.post() after rating_old', rating_old);
+                            // console.log('[xLike] self.Submit.post() after rating_new', rating_new);
 
                             // $rating.text(rating_new);
 
@@ -209,6 +212,9 @@
                             $stripe.css({minWidth: response.data['rating'] + '%'});
                         }
                     }
+
+                    //
+                    $(document).trigger('xlike_change', $button, response);
                 }
             },
             post: function (callback) {
@@ -218,7 +224,7 @@
                 self.Submit.before();
 
                 $.post(self.config['actionUrl'], self.sendData['params'], function (response) {
-                    console.log('xLike self.Submit.post() response', response);
+                    // console.log('xLike self.Submit.post() response', response);
 
                     self.Submit.after(response);
 
