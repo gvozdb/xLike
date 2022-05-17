@@ -24,7 +24,7 @@
                 {$can ? 'data-xlike-value="1" href="javascript:undefined;"' : ''}
             >
                 <svg class="xlike__icon xlike__icon_like xlike__svg xlike__svg_like icon-svg" viewBox="0 0 100 100">{$pathes}</svg>
-                <span class="xlike__count xlike__count_like [ js-xlike-number ]">{$likes | number_format : 0 : '' : ' '}</span>
+                <span class="xlike__count xlike__count_like [ js-xlike-number ]">{($likes | number_format : 0 : '' : ' ') ?: ''}</span>
             </{$can ? 'a' : 'span'}>
         </span>
         <span class="xlike__item xlike__item_dislike">
@@ -33,7 +33,7 @@
                 {$can ? 'data-xlike-value="-1" href="javascript:undefined;"' : ''}
             >
                 <svg class="xlike__icon xlike__icon_dislike xlike__svg xlike__svg_dislike icon-svg" viewBox="0 0 100 100">{$pathes}</svg>
-                <span class="xlike__count xlike__count_dislike [ js-xlike-number ]">{$dislikes | number_format : 0 : '' : ' '}</span>
+                <span class="xlike__count xlike__count_dislike [ js-xlike-number ]">{($dislikes | number_format : 0 : '' : ' ') ?: ''}</span>
             </{$can ? 'a' : 'span'}>
         </span>
     </div>

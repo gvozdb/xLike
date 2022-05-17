@@ -123,7 +123,7 @@
                     var $button = self.sendData['$element'];
                     var $object = $button.closest(self.selectors['object']);
                     var $number = $button.find(self.selectors['number']);
-                    var number = parseInt(($number.text()).replace(' ', '').replace(',', ''));
+                    var number = parseInt(($number.text() || '0').replace(' ', '').replace(',', ''));
                     // var number = $number.text();
                     // number = parseInt(number.replace(' ', '').replace(',', ''));
 
