@@ -213,7 +213,6 @@ class xLike
         }
 
         // Выборка всех голосов
-        // @formatter:off
         $q = $this->modx->newQuery('xlVote')
             ->select(array(
                 'SUM(value = 1) as likes',
@@ -226,20 +225,17 @@ class xLike
             ))
             ->limit(1)
             ->groupby('parent, class, list');
-        // @formatter:on
         if ($q->prepare() && $q->stmt->execute()) {
             if ($tmp = $q->stmt->fetch(PDO::FETCH_ASSOC) AND is_array($tmp)) {
                 $data = array_merge($data, $tmp);
 
                 // Считаем рейтинг
-                // @formatter:off
                 $data['rating'] = (
                     (($data['likes'] + 1.9208) / ($data['likes'] + $data['dislikes']) -
                     1.96 * sqrt(($data['likes'] * $data['dislikes']) / ($data['likes'] + $data['dislikes']) + 0.9604) /
                     ($data['likes'] + $data['dislikes'])) / (1 + 3.8416 / ($data['likes'] + $data['dislikes'])) * 100
                 );
                 $data['rating'] = number_format($data['rating'], 2, '.', ' ');
-                // @formatter:on
             }
             unset($tmp);
         }
